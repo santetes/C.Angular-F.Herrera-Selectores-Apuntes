@@ -18,6 +18,7 @@ export interface Pais {
   translations: { [key: string]: Translation };
   latlng: number[];
   landlocked: boolean;
+  borders: string[];
   area: number;
   demonyms: Demonyms;
   flag: string;
@@ -50,10 +51,10 @@ export interface CoatOfArms {
 }
 
 export interface Currencies {
-  EUR: Eur;
+  MKD: Mkd;
 }
 
-export interface Eur {
+export interface Mkd {
   name: string;
   symbol: string;
 }
@@ -78,8 +79,7 @@ export interface Idd {
 }
 
 export interface Languages {
-  ell: string;
-  tur: string;
+  mkd: string;
 }
 
 export interface Maps {
@@ -94,8 +94,7 @@ export interface Name {
 }
 
 export interface NativeName {
-  ell: Translation;
-  tur: Translation;
+  mkd: Translation;
 }
 
 export interface Translation {

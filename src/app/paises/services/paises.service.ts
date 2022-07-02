@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Pais } from '../interfaces/paises.interface';
-import { map, Observable } from 'rxjs';
-import { Pais2 } from '../interfaces/pais2.interface';
+import { combineLatest, map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -29,10 +28,21 @@ export class PaisesService {
   }
 
   getFronterasPorPais(pais: string) {
-    return this.http.get<Pais2[]>(`${this._url}name/${pais}`).pipe(
+    return this.http.get<Pais[]>(`${this._url}name/${pais}`).pipe(
       map((pais) => {
         return pais[0].borders ? pais[0].borders : [];
       })
     );
+  }
+
+  getNombreFronterasCompleto(listadoFronterasAbreviado: string[]) {
+    let listadoObservablesFronteras: Observable<Pais[]>[] = [];
+    listadoFronterasAbreviado.forEach((abr) => {
+      let paisObservable = this.http.get<Pais[]>(
+        `https://restcountries.com/v3.1/alpha/${abr}`
+      );
+      listadoObservablesFronteras.push(paisObservable);
+    });
+    return combineLatest(listadoObservablesFronteras);
   }
 }
